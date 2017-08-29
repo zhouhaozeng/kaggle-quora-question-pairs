@@ -2,8 +2,11 @@
 My solution to [Kaggle Quora Question Pairs](https://www.kaggle.com/c/quora-question-pairs) competition (Top 7%, 209th of 3307).
 
 ## Running
-`python quora_solver.py config/<config json file>`<br><br>
+`python quora_solver.py config/<config json file>`
+
 Parameters (data locations, network architecture, pre-trained word vectors, number of epochs, etc) can be specified in config json file (examples are in `config/`).
+
+Both prediction (`submission_*.csv`) and trained model (`model_*.h5`) will be saved.
 
 ## Requirements
 ### Dataset

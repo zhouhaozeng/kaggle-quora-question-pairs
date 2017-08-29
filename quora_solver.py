@@ -443,7 +443,7 @@ class Solver(object):
 
         early_stopping = EarlyStopping(monitor='val_loss', patience=5)
         best_model_fname = self.output_dir + 'model_' + self.name + '_%s'%(self.timestamp) + '.h5'
-        model_checkpoint = ModelCheckpoint(best_model_fname, save_best_only=True, save_weights_only=True)
+        model_checkpoint = ModelCheckpoint(best_model_fname, save_best_only=True)
         
         hist = self.model.fit(self.train_data['X'], self.train_data['Y'], \
                               validation_data=(self.val_data['X'], self.val_data['Y'], self.val_data['weight']), \
@@ -454,8 +454,8 @@ class Solver(object):
         self.best_val_score = min(hist.history['val_loss'])  
         
     def predict(self):
-        # make the submission
-        logging.info('Start making the submission')
+        # Write the submission
+        logging.info('Writing submission')
         
         preds = self.model.predict(self.test_data['X'], batch_size=2048, verbose=2)
         preds = preds.reshape((2,-1)).mean(axis=0)
