@@ -442,7 +442,7 @@ class Solver(object):
             class_weight = None        
 
         early_stopping = EarlyStopping(monitor='val_loss', patience=5)
-        best_model_fname = self.output_dir + self.name + '_model' + '_%s'%(self.timestamp) + '.h5'
+        best_model_fname = self.output_dir + 'model_' + self.name + '_%s'%(self.timestamp) + '.h5'
         model_checkpoint = ModelCheckpoint(best_model_fname, save_best_only=True, save_weights_only=True)
         
         hist = self.model.fit(self.train_data['X'], self.train_data['Y'], \
@@ -462,7 +462,7 @@ class Solver(object):
         test_ids = self.test_data['ids'].reshape((2,-1))[0,:]
         
         submission = pd.DataFrame({'test_id':test_ids, 'is_duplicate':preds.ravel()})
-        submission.to_csv(self.output_dir + self.name + '_lstm' + '_%.4f'%(self.best_val_score) + '_%s'%(self.timestamp) + '.csv', index=False)
+        submission.to_csv(self.output_dir + 'submission_' + self.name + '_%.4f'%(self.best_val_score) + '_%s'%(self.timestamp) + '.csv', index=False)
 
 
 def main():
@@ -483,7 +483,7 @@ def main():
     quora_solver.predict()
      
     end_time = time.time()
-    logging.info("Run complete: %s elapsed" % elapsed_time(start_time, end_time) )  
+    logging.info("Run complete: %s elapsed" % elapsed_time(start_time, end_time))
 
     
 if __name__ == '__main__':
