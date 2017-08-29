@@ -3,7 +3,7 @@ My solution to [Kaggle Quora Question Pairs](https://www.kaggle.com/c/quora-ques
 
 ## Running
 `python quora_solver.py config/LSTM.json`<br><br>
-Parameters (network architecture, network type, word embedding types etc) can be specified in config json file (examples are in `config/`).
+Parameters (network architecture, word embedding file, number of epochs, etc) can be specified in config json file (examples are in `config/`).
 
 ## Requirements
 ### Dataset
