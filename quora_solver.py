@@ -94,6 +94,7 @@ def text_to_wordlist(text, remove_stopwords=False, stem_words=False):
 
 
 def generate_embedding_matrix(word_index, word2vec, embedding_dim):
+    # generate embedding matrix from word vectors
     logging.info('Preparing embedding matrix')
     nb_words = len(word_index) + 1        
     embedding_matrix = np.zeros((nb_words, embedding_dim))
@@ -104,7 +105,7 @@ def generate_embedding_matrix(word_index, word2vec, embedding_dim):
     return embedding_matrix
 
 
-# load GloVe word embedding
+# load GloVe word vectors
 class glove_word2vec(object):
     def __init__(self, embedding_file):
         self.vocab = {}
@@ -118,7 +119,7 @@ class glove_word2vec(object):
 
 class Solver(object):   
     def __init__(self, config_file):
-        self.name = re.search('(\S+)\.json', config_file).group(1)
+        self.name = re.search('(\S+)\.json', os.path.basename(config_file)).group(1)
         if not os.path.isdir(self.name):
             os.mkdir(self.name)
         self.output_dir = self.name + '/'
@@ -146,9 +147,10 @@ class Solver(object):
         if self.params.get('rate_drop_dense', None) == "random":
             self.params['rate_drop_dense'] = 0.15 + np.random.rand() * 0.25   
             print("rate_drop_dense: %f" % self.params['rate_drop_dense'])  
-            
+
+
     def load_word2vec(self):
-        # read word vectors
+        # read word vectors with from
         logging.info('Load word embeddings')
         
         if self.params['embedding_file_type'] == 'word2vec':
@@ -157,7 +159,8 @@ class Solver(object):
             self.word2vec = glove_word2vec(self.params['embedding_file'])
                 
         logging.info('Found %s word vectors of word2vec' % len(self.word2vec.vocab))
-        
+
+
     def load_data(self):
         # process texts in datasets
         texts_1, texts_2, labels, ids = self.load_train_data(self.params['train_data_file'])
@@ -200,7 +203,7 @@ class Solver(object):
         self.val_data = val_data
         self.test_data = test_data
         self.word_index = word_index
-    
+
     @staticmethod
     def load_train_data(train_data_file):
         texts_1 = [] 
@@ -216,7 +219,7 @@ class Solver(object):
                 labels.append(int(values[5]))
                 ids.append(values[0])
         return texts_1, texts_2, labels, ids
-    
+
     @staticmethod
     def load_test_data(test_data_file):
         test_texts_1 = []
@@ -271,7 +274,7 @@ class Solver(object):
         self.feats_dim = feats.shape[1]
         
         return feats, test_feats
-    
+
     def train_val_split(self, data_1, data_2, feats, labels, validation_split=0.1):
         logging.info('Random seed for train validaiton data split: %s' % self.seed)
         np.random.seed(self.seed)
@@ -304,14 +307,14 @@ class Solver(object):
                     }
             
         return train_data, val_data
-    
+
     def load_embedding(self):
         # prepare word embeddings
         self.nb_words = len(self.word_index) + 1 
         self.embedding_matrix = generate_embedding_matrix(self.word_index, self.word2vec, self.params['embedding_dim'])  
-    
+
     def load_model(self):
-        if self.params['model'] == 'baseline':
+        if self.params['model'] == 'LSTM':
             embedding_layer = Embedding(self.nb_words,
                                         self.params['embedding_dim'],
                                         weights=[self.embedding_matrix],
@@ -439,7 +442,7 @@ class Solver(object):
             class_weight = None        
 
         early_stopping = EarlyStopping(monitor='val_loss', patience=5)
-        best_model_fname = self.output_dir + self.name + '_lstm' + '_model' + '_%s'%(self.timestamp) + '.h5'
+        best_model_fname = self.output_dir + self.name + '_model' + '_%s'%(self.timestamp) + '.h5'
         model_checkpoint = ModelCheckpoint(best_model_fname, save_best_only=True, save_weights_only=True)
         
         hist = self.model.fit(self.train_data['X'], self.train_data['Y'], \

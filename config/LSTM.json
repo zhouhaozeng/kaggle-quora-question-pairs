@@ -1,0 +1,18 @@
+{
+  "train_data_file": "data/train.csv",
+  "test_data_file": "data/test.csv",
+  "embedding_file": "data/glove.840B.300d.txt",
+  "embedding_file_type": "glove",
+  "embedding_dim": 300,
+  "embedding_trainable": false,
+  "max_nb_words": 200000,
+  "max_seq_len": 30,
+  "re_weight": true,
+  "model": "LSTM",
+  "nb_epoches": 200,
+  "num_lstm": "random",
+  "num_dense": "random",
+  "rate_drop_lstm": "random",
+  "rate_drop_dense": "random",
+  "dense_activation": "relu"
+}
