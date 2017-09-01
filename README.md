@@ -5,7 +5,7 @@ My solution to [Kaggle Quora Question Pairs](https://www.kaggle.com/c/quora-ques
 
 My solution is a deep learning architecture.
 * Questions are firstly pre-processed (lowercase, remove stop words, expand shortened words, etc) and encoded as padded sequences.
-* Question sequences are mapped to vectors by pre-trained word embeddings. The encoded question vectors are then fed into a LSTM layer.
+* Question sequences are mapped to vectors by pre-trained word embeddings. The encoded question vectors are then fed into a LSTM layer (alternatively, bidirectional LSTM, or Convolutional LSTM).
 * Meanwhile, statistical features (question occurrence and co-occurrence counts) are extracted from raw data and fed into a dense (fully connected) layer.
 * The two LSTM layer outputs (for question pairs) and dense layer output (for statistical features) are concatenated and fed into a dense layer to produce the final classification result.
 
