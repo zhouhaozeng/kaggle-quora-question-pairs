@@ -150,7 +150,7 @@ class Solver(object):
 
 
     def load_word2vec(self):
-        # read word vectors with from
+        # read pre-trained word vectors
         logging.info('Load word embeddings')
         
         if self.params['embedding_file_type'] == 'word2vec':
