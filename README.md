@@ -4,8 +4,9 @@ My solution to [Kaggle Quora Question Pairs](https://www.kaggle.com/c/quora-ques
 ## Overview
 
 In this competition, I'm challenged to tackling the NLP problem of identifying duplication questions on Quora. Here are a few sample lines of the dataset:
-
-<img src="images/data_example.png" width="900">
+<br><br>
+<img src="images/data_example.png" width="800">
+<br><br>
 
 My solution is a deep learning architecture.
 * Questions are firstly pre-processed (lowercase, remove stop words, expand shortened words, etc) and encoded as padded sequences.
