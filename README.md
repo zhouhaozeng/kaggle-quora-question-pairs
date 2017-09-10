@@ -5,7 +5,7 @@ My solution to [Kaggle Quora Question Pairs](https://www.kaggle.com/c/quora-ques
 
 In this competition, I'm challenged to tackling the NLP problem of identifying duplication questions on Quora. Here are a few sample lines of the dataset:
 <br><br>
-<img src="images/data_example.png" width="800">
+<img src="images/data_example.png" width="700">
 <br><br>
 
 My solution is a deep learning architecture.
