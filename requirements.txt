@@ -7,7 +7,7 @@ chardet==3.0.4
 funcsigs==1.0.2
 gensim==2.3.0
 h5py==2.7.0
-html5lib==0.9999999
+html5lib==0.99999999
 idna==2.6
 Keras==2.0.8
 Markdown==2.6.9
